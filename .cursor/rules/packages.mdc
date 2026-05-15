@@ -23,6 +23,29 @@ alwaysApply: true
 | Forms | Native HTML + **Formspree** (no form library) |
 | Responsive detection | `useIsMobile` hook (already in `src/hooks/`) |
 
+## Media Assets — Cloudinary
+Images and videos for production are hosted on Cloudinary (free tier: 25 GB CDN).
+
+**Helper:** `src/lib/cloudinary.ts` — use `cloudinaryImage()` and `cloudinaryVideo()`.
+
+```ts
+import { cloudinaryImage, cloudinaryVideo, transforms } from '@/lib/cloudinary'
+
+// In gyms.ts (when you have the real photo):
+img: cloudinaryImage('team-mas/sede-buenosaires', transforms.gymCard)
+
+// In Spatial.tsx (hero video):
+src={cloudinaryVideo('team-mas/hero-loop', transforms.video)}
+```
+
+**Upload flow:**
+1. cloudinary.com → Media Library → Upload → organize under folder `team-mas/`
+2. Copy the **Public ID** (e.g. `team-mas/sede-buenosaires`)
+3. Replace the path in `gyms.ts` or the section component
+4. Local placeholders (`public/images/`) stay as fallbacks during dev if `VITE_CLOUDINARY_CLOUD_NAME` is not set
+
+**GitHub Actions secret:** add `VITE_CLOUDINARY_CLOUD_NAME` in repo Settings → Secrets → Actions.
+
 ## Don't Install
 - jQuery, lodash, underscore — use native JS/TS
 - moment.js — use `Intl.DateTimeFormat` or `date-fns` only if unavoidable

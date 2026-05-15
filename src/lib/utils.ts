@@ -5,5 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-// Prefixes public/ asset paths with Vite's base URL so they work on GitHub Pages (/team-mas-bjj/).
-export const asset = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+// Prefixes local public/ paths with Vite's base URL. Full URLs (http/https) pass through unchanged.
+export const asset = (path: string) =>
+  path.startsWith('http') ? path : `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
