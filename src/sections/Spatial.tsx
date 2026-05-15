@@ -64,6 +64,7 @@ export default function Spatial() {
         muted
         loop
         playsInline
+        aria-hidden="true"
         style={{
           position: 'absolute',
           top: 0,

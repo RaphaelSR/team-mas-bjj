@@ -1,12 +1,13 @@
-import { useEffect, useRef } from 'react'
+import { lazy, Suspense, useEffect, useRef } from 'react'
 import Header from './sections/Header'
 import Spatial from './sections/Spatial'
 import Philosophy from './sections/Philosophy'
 import Works from './sections/Works'
-import Capabilities from './sections/Capabilities'
-import Hero from './sections/Hero'
 import Footer from './sections/Footer'
 import Preloader from './sections/Preloader'
+
+const Capabilities = lazy(() => import('./sections/Capabilities'))
+const Hero = lazy(() => import('./sections/Hero'))
 
 function App() {
   const scrollRef = useRef({ y: 0, speed: 0 })
@@ -36,8 +37,12 @@ function App() {
         <Spatial />
         <Philosophy />
         <Works scrollRef={scrollRef} />
-        <Capabilities />
-        <Hero />
+        <Suspense fallback={<div style={{ height: '600px', backgroundColor: '#0b0b0b' }} />}>
+          <Capabilities />
+        </Suspense>
+        <Suspense fallback={<div style={{ height: '700px', backgroundColor: '#0b0b0b' }} />}>
+          <Hero />
+        </Suspense>
       </main>
       <Footer />
     </>

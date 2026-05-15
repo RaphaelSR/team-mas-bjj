@@ -1,0 +1,54 @@
+---
+description: Coding conventions and patterns for the Team MAS BJJ landing page.
+globs: ["src/**/*.tsx", "src/**/*.ts"]
+alwaysApply: false
+---
+
+# Project Patterns
+
+## Stack
+- React 19 + TypeScript (strict) + Vite 7
+- Inline CSS (`style={{...}}`) for section-level components — NOT Tailwind classes
+- Tailwind utilities are reserved for `src/components/ui/` (shadcn primitives only)
+- GSAP + ScrollTrigger for scroll animations
+- Three.js for WebGL (Hero shader background)
+- i18n via `useI18n()` hook — all user-facing strings must go through `t('key')`
+
+## File Structure
+```
+src/
+  sections/   # Full-page sections: Hero, Works, Capabilities, etc.
+  components/
+    ui/        # Reusable shadcn/Radix primitives ONLY
+  data/        # Static data (gyms.ts)
+  i18n/        # Translations (translations.ts) + context (I18nContext.tsx)
+  hooks/       # Custom hooks (use-mobile.ts)
+  lib/         # Tiny utilities (utils.ts)
+```
+
+## TypeScript
+- No `any` — use `unknown` + type guards
+- Prefer `interface` for component props, `type` for unions and aliases
+- No non-null assertions (`!`) unless the value is provably present
+- Cast env vars explicitly: `import.meta.env.VITE_X as string | undefined`
+
+## Styling Conventions
+- `clamp(min, preferred, max)` for responsive font sizes and spacing
+- Responsive grids: `repeat(auto-fit, minmax(min(100%, Xpx), 1fr))`
+- Validate layouts at 375 px, 768 px, and 1280 px before shipping
+- For conditional mobile styles, use the `useIsMobile()` hook
+
+## Performance
+- Lazy-load below-the-fold sections with `React.lazy()` + `<Suspense>`
+- Cap per-chunk size to < 300 KB gzipped
+- Use `Math.min(window.devicePixelRatio, 2)` for canvas pixel ratio (already standard in project)
+- GSAP contexts (`gsap.context()`) must be cleaned up in the `useEffect` return
+
+## Environment Variables
+- All client-side vars: `import.meta.env.VITE_*` (type: `string | undefined`)
+- GitHub Actions sets secrets as env vars; `.env.local` is for local dev only
+
+## Deploy
+- Push to `main` → GitHub Actions → Vite build → `gh-pages` branch
+- `vite.config.ts` sets `base: '/team-mas-bjj/'` only when `GITHUB_ACTIONS=true`
+- `public/404.html` handles SPA routing on GitHub Pages (spa-github-pages technique)

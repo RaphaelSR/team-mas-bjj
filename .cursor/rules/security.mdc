@@ -1,0 +1,33 @@
+---
+description: Security rules — applied to every file in this project.
+alwaysApply: true
+---
+
+# Security
+
+## Secrets & Environment Variables
+- NEVER hardcode API keys, tokens, passwords, or endpoints in source code
+- Use `import.meta.env.VITE_*` for all client-side config (strings, endpoints)
+- All secrets live in `.env.local` (gitignored) or GitHub Actions Secrets
+- Never commit `.env.local`, `.env.*.local`, or any file containing real credentials
+- Always guard env vars: `if (!ENDPOINT) { setError('Not configured'); return }`
+
+## Input & Output
+- Never use `dangerouslySetInnerHTML` — all content goes through React's JSX escaping
+- Sanitize nothing that comes out of our own translation files (trusted static data)
+- Validate user input at the boundary only (form submission), not deeper in the stack
+- Form data is sent via `fetch` to Formspree; Formspree handles server-side validation
+
+## External Links
+- Every `target="_blank"` link must have `rel="noopener noreferrer"` — already enforced in the codebase
+- External image sources used in canvas require `crossOrigin="anonymous"` (already in Works.tsx)
+
+## Dependencies
+- Run `npm audit` before merging any PR that changes `package.json`
+- Never install a package from an unknown publisher or with < 10k weekly downloads
+- Prefer the approved stack (see packages.mdc) over adding new dependencies
+
+## Git hygiene
+- `dist/`, `node_modules/`, `.env.local` are in `.gitignore` — never force-add them
+- Never push API keys, tokens, or credentials to any branch, including feature branches
+- If a secret is accidentally committed: rotate the secret immediately, then clean git history

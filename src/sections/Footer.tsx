@@ -172,6 +172,7 @@ export default function Footer() {
           address={(t('sedes.buenosAires.address') as string) || gyms[0].address}
           instagram="https://www.instagram.com/team_mas_buenosaires/"
           igHandle="@team_mas_buenosaires"
+          mapsUrl={`https://www.google.com/maps?q=${gyms[0].lat},${gyms[0].lng}`}
         />
         <GymColumn
           city={t('sedes.olivos.name') as string}
@@ -179,6 +180,7 @@ export default function Footer() {
           address={(t('sedes.olivos.address') as string) || gyms[1].address}
           instagram="https://www.instagram.com/team_mas_olivos/"
           igHandle="@team_mas_olivos"
+          mapsUrl={`https://www.google.com/maps?q=${gyms[1].lat},${gyms[1].lng}`}
         />
         <GymColumn
           city={t('sedes.urquiza.name') as string}
@@ -186,6 +188,7 @@ export default function Footer() {
           address={(t('sedes.urquiza.address') as string) || gyms[2].address}
           instagram="https://www.instagram.com/team_mas_urquiza/"
           igHandle="@team_mas_urquiza"
+          mapsUrl={`https://www.google.com/maps?q=${gyms[2].lat},${gyms[2].lng}`}
         />
         <GymColumn
           city={t('sedes.rosario.name') as string}
@@ -193,6 +196,7 @@ export default function Footer() {
           address={(t('sedes.rosario.address') as string) || gyms[3].address}
           instagram="https://www.instagram.com/team_mas_bjj/"
           igHandle="@team_mas_bjj"
+          mapsUrl={`https://www.google.com/maps?q=${gyms[3].lat},${gyms[3].lng}`}
         />
 
         <div>
@@ -305,12 +309,14 @@ function GymColumn({
   address,
   instagram,
   igHandle,
+  mapsUrl,
 }: {
   city: string
   cityEn: string
   address: string
   instagram: string
   igHandle: string
+  mapsUrl: string
 }) {
   return (
     <div>
@@ -342,30 +348,55 @@ function GymColumn({
       >
         {address}
       </p>
-      <a
-        href={instagram}
-        target="_blank"
-        rel="noopener noreferrer"
-        style={{
-          fontSize: '13px',
-          color: '#888888',
-          textDecoration: 'none',
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          fontFamily: '"Inter", sans-serif',
-          transition: 'color 0.25s ease',
-        }}
-        onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
-        onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-          <circle cx="12" cy="12" r="5" />
-          <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-        </svg>
-        {igHandle}
-      </a>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <a
+          href={mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: '13px',
+            color: '#888888',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontFamily: '"Inter", sans-serif',
+            transition: 'color 0.25s ease',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Ver en Maps →
+        </a>
+        <a
+          href={instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: '13px',
+            color: '#888888',
+            textDecoration: 'none',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '6px',
+            fontFamily: '"Inter", sans-serif',
+            transition: 'color 0.25s ease',
+          }}
+          onMouseEnter={(e) => (e.currentTarget.style.color = '#ffffff')}
+          onMouseLeave={(e) => (e.currentTarget.style.color = '#888888')}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+            <circle cx="12" cy="12" r="5" />
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+          </svg>
+          {igHandle}
+        </a>
+      </div>
     </div>
   )
 }

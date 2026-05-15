@@ -1,0 +1,38 @@
+---
+description: Simplification and code quality principles for every change.
+alwaysApply: true
+---
+
+# Simplify
+
+## The Baseline Rules
+- Don't add features, refactors, or abstractions beyond what the task requires
+- Don't design for hypothetical future requirements
+- Three similar lines is better than a premature abstraction
+- No half-finished implementations — ship it or don't write it
+
+## Error Handling
+- Only validate at system boundaries: user form input and external API responses
+- Trust React's guarantees, TypeScript types, and internal component contracts
+- Don't add fallback states for scenarios the code prevents from happening
+
+## Comments
+- Default: zero comments
+- Only add a comment when the WHY is non-obvious — a browser quirk, a hidden constraint, a workaround
+- Never write JSDoc blocks or multi-line comment explanations of what the code does
+
+## Components & Abstractions
+- Don't extract a helper used in only one place
+- Don't split a component unless the file exceeds ~400 lines or the piece is reused 3+ times
+- Don't add loading states unless there is a real async operation (avoid skeleton shimmer theater)
+
+## Inline Styles
+- Keep styles co-located with the element they affect (status quo in this project)
+- Don't prematurely extract a shared style object unless it's used in 3+ places in the same file
+- Don't introduce a CSS-in-JS library or theme system — the project intentionally avoids this
+
+## What "Done" Means
+- The feature works at 375 px, 768 px, and 1280 px
+- `npm run check` passes (TypeScript)
+- `npm run lint` passes
+- No console errors or warnings in the browser

@@ -19,7 +19,7 @@ export default function Works({ scrollRef: _scrollRef }: WorksProps) {
   const strengthRef = useRef(0)
   const prevScrollYRef = useRef(0)
   const randsRef = useRef<number[][]>(
-    gyms.map(() => [Math.random(), Math.random(), Math.random(), Math.random()])
+    Array.from({ length: gyms.length }, () => [0.5, 0.5, 0.5, 0.5])
   )
   const { t } = useI18n()
 

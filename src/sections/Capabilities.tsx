@@ -57,6 +57,7 @@ export default function Capabilities() {
         muted
         loop
         playsInline
+        aria-hidden="true"
         style={{
           position: 'absolute',
           top: 0,

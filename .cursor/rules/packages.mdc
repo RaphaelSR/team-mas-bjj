@@ -1,0 +1,36 @@
+---
+description: Package management — research and install only safe, necessary packages.
+alwaysApply: true
+---
+
+# Package Management
+
+## Before Installing Anything
+1. Check npmjs.com — weekly downloads, last publish date, number of open issues
+2. Verify active maintenance: last publish within 12 months
+3. Check for CVEs: `npm audit` after installing, or search on Snyk
+4. Confirm the package is actually necessary — can we do this with 20 lines of code?
+5. Prefer packages already in the project over adding new ones
+
+## Approved Stack (use these first — already installed)
+| Need | Use |
+|------|-----|
+| Scroll animations | **GSAP** + ScrollTrigger |
+| 3D / WebGL shader | **Three.js** |
+| UI primitives | **Radix UI** (label, separator, slot) |
+| Icons | **Lucide React** |
+| Utility classes | **tailwind-merge** + **clsx** |
+| Forms | Native HTML + **Formspree** (no form library) |
+| Responsive detection | `useIsMobile` hook (already in `src/hooks/`) |
+
+## Don't Install
+- jQuery, lodash, underscore — use native JS/TS
+- moment.js — use `Intl.DateTimeFormat` or `date-fns` only if unavoidable
+- Any CSS-in-JS library (styled-components, emotion) — project uses inline styles
+- Any analytics or tracking SDK without explicit client approval
+- Packages that require ejecting or patching the Vite config
+
+## Avoid Installing When
+- A native browser API covers the use case (IntersectionObserver, ResizeObserver, fetch, Geolocation, etc.)
+- The addition would push main chunk beyond 300 KB gzipped
+- The package is a "wrapper" over something already in Three.js or GSAP

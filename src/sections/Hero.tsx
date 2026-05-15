@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { useI18n } from '@/i18n/I18nContext'
+import { useIsMobile } from '@/hooks/use-mobile'
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
 
@@ -377,11 +378,12 @@ export default function Hero() {
 }
 
 function Row({ children }: { children: React.ReactNode }) {
+  const isMobile = useIsMobile()
   return (
     <div
       style={{
         display: 'grid',
-        gridTemplateColumns: '1fr 1fr',
+        gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
         gap: '20px',
       }}
     >
