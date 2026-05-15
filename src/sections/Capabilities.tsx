@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useI18n } from '@/i18n/I18nContext'
+import { asset } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -53,7 +54,7 @@ export default function Capabilities() {
     >
       <video
         ref={videoRef}
-        src="/videos/training-reel.mp4"
+        src={asset('/videos/training-reel.mp4')}
         muted
         loop
         playsInline

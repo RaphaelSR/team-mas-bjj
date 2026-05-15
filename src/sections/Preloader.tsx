@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { asset } from '@/lib/utils'
 
 export default function Preloader() {
   const [phase, setPhase] = useState<'loading' | 'reveal' | 'done'>('loading')
@@ -38,7 +39,7 @@ export default function Preloader() {
         }}
       >
         <img
-          src="/images/team-mas-logo.png"
+          src={asset('/images/team-mas-logo.png')}
           alt="Team Mas BJJ"
           style={{
             width: '120px',

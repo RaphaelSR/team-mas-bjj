@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useI18n, type Lang } from '@/i18n/I18nContext'
 import { useIsMobile } from '@/hooks/use-mobile'
+import { asset } from '@/lib/utils'
 
 interface HeaderProps {
   scrollRef: React.MutableRefObject<{ y: number; speed: number }>
@@ -84,7 +85,7 @@ export default function Header({ scrollRef }: HeaderProps) {
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       >
         <img
-          src="/images/team-mas-logo.png"
+          src={asset('/images/team-mas-logo.png')}
           alt="Team MAS BJJ — Volver al inicio"
           style={{ height: isCompact ? '36px' : '44px', width: 'auto' }}
         />

@@ -3,6 +3,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { gyms, type Gym } from '../data/gyms'
 import { useI18n } from '@/i18n/I18nContext'
+import { asset } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -66,7 +67,7 @@ export default function Works({ scrollRef: _scrollRef }: WorksProps) {
           drawImage(canvas, img, 0, randsRef.current[i])
         }
       }
-      img.src = gym.img
+      img.src = asset(gym.img)
     })
   }, [])
 

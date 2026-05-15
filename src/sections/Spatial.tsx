@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useI18n } from '@/i18n/I18nContext'
+import { asset } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -60,7 +61,7 @@ export default function Spatial() {
     >
       <video
         ref={videoRef}
-        src="/videos/hero-loop.mp4"
+        src={asset('/videos/hero-loop.mp4')}
         muted
         loop
         playsInline
@@ -78,7 +79,7 @@ export default function Spatial() {
 
       {/* Background image behind video */}
       <img
-        src="/images/hero-mats.jpg"
+        src={asset('/images/hero-mats.jpg')}
         alt=""
         style={{
           position: 'absolute',
