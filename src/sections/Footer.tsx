@@ -172,7 +172,7 @@ export default function Footer() {
           address={(t('sedes.buenosAires.address') as string) || gyms[0].address}
           instagram="https://www.instagram.com/team_mas_buenosaires/"
           igHandle="@team_mas_buenosaires"
-          mapsUrl={`https://www.google.com/maps?q=${gyms[0].lat},${gyms[0].lng}`}
+          mapsUrl={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(gyms[0].address)}`}
         />
         <GymColumn
           city={t('sedes.olivos.name') as string}
@@ -180,7 +180,7 @@ export default function Footer() {
           address={(t('sedes.olivos.address') as string) || gyms[1].address}
           instagram="https://www.instagram.com/team_mas_olivos/"
           igHandle="@team_mas_olivos"
-          mapsUrl={`https://www.google.com/maps?q=${gyms[1].lat},${gyms[1].lng}`}
+          mapsUrl={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(gyms[1].address)}`}
         />
         <GymColumn
           city={t('sedes.urquiza.name') as string}
@@ -188,7 +188,7 @@ export default function Footer() {
           address={(t('sedes.urquiza.address') as string) || gyms[2].address}
           instagram="https://www.instagram.com/team_mas_urquiza/"
           igHandle="@team_mas_urquiza"
-          mapsUrl={`https://www.google.com/maps?q=${gyms[2].lat},${gyms[2].lng}`}
+          mapsUrl={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(gyms[2].address)}`}
         />
         <GymColumn
           city={t('sedes.rosario.name') as string}
@@ -196,7 +196,7 @@ export default function Footer() {
           address={(t('sedes.rosario.address') as string) || gyms[3].address}
           instagram="https://www.instagram.com/team_mas_bjj/"
           igHandle="@team_mas_bjj"
-          mapsUrl={`https://www.google.com/maps?q=${gyms[3].lat},${gyms[3].lng}`}
+          mapsUrl={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(gyms[3].address)}`}
         />
 
         <div>
