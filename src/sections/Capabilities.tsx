@@ -10,7 +10,7 @@ export default function Capabilities() {
   const videoRef = useRef<HTMLVideoElement>(null)
   const { t } = useI18n()
 
-  const items = (t('programs.items') as { label: string; detail: string }[]) || []
+  const items = (t('programs.items') as unknown as { label: string; detail: string }[]) || []
 
   useEffect(() => {
     const video = videoRef.current

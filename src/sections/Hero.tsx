@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
-import { trpc } from '@/providers/trpc'
 import { useI18n } from '@/i18n/I18nContext'
+
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
 
 const vertexShader = `
 varying vec2 vUv;
@@ -59,6 +60,7 @@ export default function Hero() {
   const [submitHovered, setSubmitHovered] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -75,16 +77,6 @@ export default function Hero() {
   const formTitle = t('contact.formTitle') as string
   const getInTouch = t('contact.getInTouch') as string
   const gymOptions = t('contact.gyms') as string[]
-
-  const createContact = trpc.contact.create.useMutation({
-    onSuccess: () => {
-      setSubmitted(true)
-      setSubmitError(null)
-    },
-    onError: (err) => {
-      setSubmitError(err.message || 'Something went wrong.')
-    },
-  })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
@@ -146,7 +138,7 @@ export default function Hero() {
     }
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setSubmitError(null)
 
@@ -155,13 +147,35 @@ export default function Hero() {
       return
     }
 
-    createContact.mutate({
-      fullName: formData.name,
-      email: formData.email,
-      phone: formData.phone || undefined,
-      message: formData.message || undefined,
-      gymInterest: formData.gymInterest,
-    })
+    if (!FORMSPREE_ENDPOINT) {
+      setSubmitError('Form endpoint not configured.')
+      return
+    }
+
+    setIsPending(true)
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          fullName: formData.name,
+          email: formData.email,
+          phone: formData.phone || undefined,
+          gymInterest: formData.gymInterest,
+          message: formData.message || undefined,
+        }),
+      })
+      if (res.ok) {
+        setSubmitted(true)
+      } else {
+        const data = await res.json().catch(() => ({}))
+        setSubmitError((data as { error?: string }).error || 'Something went wrong.')
+      }
+    } catch {
+      setSubmitError('Network error. Please try again.')
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -333,7 +347,7 @@ export default function Hero() {
               />
               <button
                 type="submit"
-                disabled={createContact.isPending}
+                disabled={isPending}
                 onMouseEnter={() => setSubmitHovered(true)}
                 onMouseLeave={() => setSubmitHovered(false)}
                 style={{
@@ -345,14 +359,14 @@ export default function Hero() {
                   color: submitHovered ? '#0b0b0b' : '#ffffff',
                   backgroundColor: submitHovered ? '#ffffff' : 'transparent',
                   border: '1px solid #ffffff',
-                  cursor: createContact.isPending ? 'wait' : 'pointer',
+                  cursor: isPending ? 'wait' : 'pointer',
                   textTransform: 'uppercase',
                   transition: 'all 0.25s ease',
                   fontFamily: '"Inter", "Helvetica Neue", sans-serif',
-                  opacity: createContact.isPending ? 0.6 : 1,
+                  opacity: isPending ? 0.6 : 1,
                 }}
               >
-                {createContact.isPending ? (t('contact.submitting') as string) : (t('contact.submit') as string)}
+                {isPending ? (t('contact.submitting') as string) : (t('contact.submit') as string)}
               </button>
             </form>
           )}

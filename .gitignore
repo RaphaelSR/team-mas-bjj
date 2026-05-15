@@ -10,25 +10,8 @@ node_modules/
 .env.local
 .env.*.local
 
-# Database
-*.db
-*.sqlite
-*.sqlite3
-db/migrations/*.sql
-
-# TypeScript cache
-*.tsbuildinfo
-
 # Build outputs
 dist/
-build/
-
-# Test coverage
-coverage/
-.nyc_output/
 
 # Logs
 *.log
-
-# Large media assets
-# public/videos/  <-- required for deployment, do not ignore
